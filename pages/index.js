@@ -40,7 +40,7 @@ export default function Home({
               <div className="font-bold text-xl mb-2">
                 {name}, {region}, <Date dateString={time} />
               </div>
-              <span className="flex flex-row text-center justify-center items-center ml-16">
+              <span className="flex flex-row text-center justify-center items-center ml-16 -mb-4">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
               <p>Temp: {temp}&deg;F</p>
