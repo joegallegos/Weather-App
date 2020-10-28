@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Heading } from '@chakra-ui/core';
 import Date from '../components/Date';
+import clsx from 'clsx';
 
 export default function Home({
   name,
@@ -31,7 +32,9 @@ export default function Home({
       </div>
       <div className="flex flex-row justify-center text-center item-center">
         <div className="flex flex-col m-4">
-          <h1 className="text-5xl mb-8">{cloud > 40 ? 'Not worth it' : 'Go for it dude!'}</h1>
+          <h1 className={clsx('text-5xl mb-8', cloud <= 30 ? 'text-green-600' : 'text-red-600')}>
+            {cloud > 30 ? 'Not worth it' : 'Go for it dude!'}
+          </h1>
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">
@@ -40,39 +43,52 @@ export default function Home({
               <span className="flex flex-row text-center justify-center items-center ml-16">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
-              <p>Temp: {temp}</p>
+              <p>Temp: {temp}&deg;F</p>
               <p>Wind: {wind} MPH</p>
               <p>Humidity: {humidity}%</p>
-              <p>Cloud coverage: {cloud}%</p>
+              <p
+                className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
+              >
+                Cloud coverage: {cloud}%
+              </p>
               <p>Sunset: {sunset}</p>
               <p>Moon Rise: {moonrise}</p>
               <p>Moon Set: {moonset}</p>
               <p>Moon Phase: {phase}</p>
-              <p>Illumination: {illumination}</p>
+              <p
+                className={clsx(
+                  'font-extrabold',
+                  illumination <= 50 ? 'text-green-600' : 'text-red-600'
+                )}
+              >
+                Illumination: {illumination}
+              </p>
             </div>
-            <div class="px-6 pt-4 pb-2">
-              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            <div className="px-6 pt-4 pb-2">
+              <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                 Last Updated: <Date dateString={updated} />
               </span>
             </div>
           </div>
         </div>
       </div>
+      <div className="flex justify-center mt-4">
+        <footer>Joe Gallegos 2020 || Powered by Next.js</footer>
+      </div>
     </div>
   );
 }
 
 Home.getInitialProps = async () => {
-  const res = await fetch(
-    'http://api.weatherapi.com/v1/current.json?key=17cfa4ff046e47a1828152113202810&q=75098'
-  );
+  const baseUrl = 'http://api.weatherapi.com/v1';
+  const key = process.env.API_KEY;
+
+  const res = await fetch(baseUrl + '/current.json?key=' + key + '&q=75098');
   const json = await res.json();
   const location = await json.location;
   const current = await json.current;
 
-  const astro = await fetch(
-    'http://api.weatherapi.com/v1/astronomy.json?key=17cfa4ff046e47a1828152113202810&q=75098&dt=2020-10-28'
-  );
+  const astro = await fetch(baseUrl + '/astronomy.json?key=' + key + '&q=75098&dt=2020-10-28');
   const jsonAstro = await astro.json();
 
   return {
