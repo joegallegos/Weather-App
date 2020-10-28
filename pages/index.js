@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Button, Heading } from '@chakra-ui/core';
 
 export default function Home() {
   return (
@@ -9,7 +10,8 @@ export default function Home() {
       </Head>
 
       <div className="flex m-4 text-3xl font-bold">
-        <h1 className="text-center">Worth Going Outside?</h1>
+        <Heading className="text-center">Worth Going Outside?</Heading>
+        <Button variantColor="green">Test</Button>
       </div>
     </div>
   );
