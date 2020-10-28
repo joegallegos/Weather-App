@@ -12,6 +12,7 @@
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "axios": "^0.21.0",
+    "clsx": "^1.1.1",
     "date-fns": "^2.16.1",
     "emotion-theming": "^10.0.27",
     "next": "10.0.0",
