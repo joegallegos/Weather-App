@@ -2,7 +2,17 @@ import Head from 'next/head';
 import { Heading } from '@chakra-ui/core';
 import Date from '../components/Date';
 
-export default function Home({ name, region, time, temp, condition_text, wind, humidity, cloud }) {
+export default function Home({
+  name,
+  region,
+  time,
+  temp,
+  condition_text,
+  condition_icon,
+  wind,
+  humidity,
+  cloud,
+}) {
   return (
     <div className="max-w-full max-h-full flex flex-col">
       <Head>
@@ -22,7 +32,9 @@ export default function Home({ name, region, time, temp, condition_text, wind, h
                 {name}, {region}, <Date dateString={time} />
               </div>
               <p>Temp: {temp}</p>
-              <p>Conditions: {condition_text}</p>
+              <span className="flex flex-row text-center justify-center items-center ml-16">
+                Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
+              </span>
               <p>Wind: {wind} MPH</p>
               <p>Humidity: {humidity}%</p>
               <p>Cloud coverage: {cloud}%</p>
@@ -48,6 +60,7 @@ Home.getInitialProps = async () => {
     time: location.localtime,
     temp: current.temp_f,
     condition_text: current.condition.text,
+    condition_icon: current.condition.icon,
     wind: current.wind_mph,
     humidity: current.humidity,
     cloud: current.cloud,
