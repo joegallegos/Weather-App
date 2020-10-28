@@ -12,6 +12,12 @@ export default function Home({
   wind,
   humidity,
   cloud,
+  updated,
+  sunset,
+  moonrise,
+  moonset,
+  phase,
+  illumination,
 }) {
   return (
     <div className="max-w-full max-h-full flex flex-col">
@@ -31,13 +37,23 @@ export default function Home({
               <div className="font-bold text-xl mb-2">
                 {name}, {region}, <Date dateString={time} />
               </div>
-              <p>Temp: {temp}</p>
               <span className="flex flex-row text-center justify-center items-center ml-16">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
+              <p>Temp: {temp}</p>
               <p>Wind: {wind} MPH</p>
               <p>Humidity: {humidity}%</p>
               <p>Cloud coverage: {cloud}%</p>
+              <p>Sunset: {sunset}</p>
+              <p>Moon Rise: {moonrise}</p>
+              <p>Moon Set: {moonset}</p>
+              <p>Moon Phase: {phase}</p>
+              <p>Illumination: {illumination}</p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                Last Updated: <Date dateString={updated} />
+              </span>
             </div>
           </div>
         </div>
@@ -54,15 +70,26 @@ Home.getInitialProps = async () => {
   const location = await json.location;
   const current = await json.current;
 
+  const astro = await fetch(
+    'http://api.weatherapi.com/v1/astronomy.json?key=17cfa4ff046e47a1828152113202810&q=75098&dt=2020-10-28'
+  );
+  const jsonAstro = await astro.json();
+
   return {
     name: location.name,
     region: location.region,
     time: location.localtime,
+    updated: current.last_updated,
     temp: current.temp_f,
     condition_text: current.condition.text,
     condition_icon: current.condition.icon,
     wind: current.wind_mph,
     humidity: current.humidity,
     cloud: current.cloud,
+    sunset: jsonAstro.astronomy.astro.sunset,
+    moonrise: jsonAstro.astronomy.astro.moonrise,
+    moonset: jsonAstro.astronomy.astro.moonset,
+    phase: jsonAstro.astronomy.astro.moon_phase,
+    illumination: jsonAstro.astronomy.astro.moon_illumination,
   };
 };

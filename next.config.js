@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    weatherApiKey: process.env.WEATHER_API,
+    apiUrl: process.env.API_URL,
   },
 };
