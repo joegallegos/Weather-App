@@ -49,9 +49,23 @@ export default function Home({
               <span className="flex flex-row text-center justify-center items-center ml-16 -mb-4">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
-              <p>Temp: {Math.floor(temp)}&deg;F</p>
-              <p>Wind: {Math.floor(wind)} MPH</p>
-              <p>Humidity: {humidity}%</p>
+              <p
+                className={clsx(
+                  temp >= 80
+                    ? 'text-red-500'
+                    : temp <= 79 && temp >= 40
+                    ? 'text-green-500'
+                    : 'text-blue-500'
+                )}
+              >
+                Temp: {Math.floor(temp)}&deg;F
+              </p>
+              <p className={clsx(wind >= 7 ? 'text-red-500' : 'text-green-500')}>
+                Wind: {Math.floor(wind)} MPH
+              </p>
+              <p className={clsx(humidity >= 85 ? 'text-red-500' : 'text-green-500')}>
+                Humidity: {humidity}%
+              </p>
               <p
                 className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
               >
@@ -88,13 +102,15 @@ export default function Home({
 Home.getInitialProps = async () => {
   const baseUrl = 'http://api.weatherapi.com/v1';
   const key = process.env.API_KEY;
+  const day = new Date();
+  const today = day.getDate();
 
   const res = await fetch(baseUrl + '/current.json?key=' + key + '&q=75098');
   const json = await res.json();
   const location = await json.location;
   const current = await json.current;
 
-  const astro = await fetch(baseUrl + '/astronomy.json?key=' + key + '&q=75098&dt=2020-10-28');
+  const astro = await fetch(baseUrl + '/astronomy.json?key=' + key + '&q=75098&dt=' + today);
   const jsonAstro = await astro.json();
 
   return {
