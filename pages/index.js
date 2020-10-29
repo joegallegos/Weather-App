@@ -1,12 +1,11 @@
 import Head from 'next/head';
 import { Heading } from '@chakra-ui/core';
-import Date from '../components/Date';
+import ConvertDate from '../components/ConvertDate';
 import clsx from 'clsx';
 
 export default function Home({
   name,
   region,
-  time,
   temp,
   condition_text,
   condition_icon,
@@ -20,6 +19,10 @@ export default function Home({
   phase,
   illumination,
 }) {
+  const d = new Date();
+  const currentYear = d.getFullYear();
+  const currentTime = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   return (
     <div className="max-w-full max-h-full flex flex-col">
       <Head>
@@ -38,13 +41,13 @@ export default function Home({
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">
-                {name}, {region}, <Date dateString={time} />
+                {name}, {region} {currentTime}
               </div>
               <span className="flex flex-row text-center justify-center items-center ml-16 -mb-4">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
-              <p>Temp: {temp}&deg;F</p>
-              <p>Wind: {wind} MPH</p>
+              <p>Temp: {Math.floor(temp)}&deg;F</p>
+              <p>Wind: {Math.floor(wind)} MPH</p>
               <p>Humidity: {humidity}%</p>
               <p
                 className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
@@ -61,19 +64,19 @@ export default function Home({
                   illumination <= 50 ? 'text-green-600' : 'text-red-600'
                 )}
               >
-                Illumination: {illumination}
+                Illumination: {illumination}%
               </p>
             </div>
             <div className="px-6 pt-4 pb-2">
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                Last Updated: <Date dateString={updated} />
+                Last Updated: <ConvertDate dateString={updated} />
               </span>
             </div>
           </div>
         </div>
       </div>
       <div className="flex justify-center mt-4">
-        <footer>Joe Gallegos 2020 || Powered by Next.js</footer>
+        <footer>Joe Gallegos &#169;{currentYear}</footer>
       </div>
     </div>
   );
@@ -94,7 +97,6 @@ Home.getInitialProps = async () => {
   return {
     name: location.name,
     region: location.region,
-    time: location.localtime,
     updated: current.last_updated,
     temp: current.temp_f,
     condition_text: current.condition.text,
