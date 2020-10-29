@@ -41,7 +41,10 @@ export default function Home({
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">
-                {name}, {region} {currentTime}
+                <p>
+                  {name}, {region}
+                </p>
+                <span>{currentTime}</span>
               </div>
               <span className="flex flex-row text-center justify-center items-center ml-16 -mb-4">
                 Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
