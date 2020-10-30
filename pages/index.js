@@ -36,7 +36,7 @@ export default function Home({
       <div className="flex flex-row justify-center text-center item-center">
         <div className="flex flex-col m-4">
           <h1 className={clsx('text-5xl mb-8', cloud <= 30 ? 'text-green-600' : 'text-red-600')}>
-            {cloud > 30 ? 'Not worth it' : 'Go for it dude!'}
+            {cloud > 30 ? 'Not worth it' : 'Worth taking a look!'}
           </h1>
           <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-200">
             <div className="px-6 py-4">
@@ -45,9 +45,10 @@ export default function Home({
                   {name}, {region}
                 </p>
                 <span>{currentTime}</span>
+                <p>Current Conditions</p>
               </div>
               <span className="flex flex-row text-center justify-center items-center ml-16 -mb-4">
-                Conditions: {condition_text} <img className="ml-2" src={condition_icon} />
+                {condition_text} <img className="ml-2" src={condition_icon} />
               </span>
               <p
                 className={clsx(
