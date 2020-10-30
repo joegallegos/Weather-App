@@ -70,7 +70,7 @@ export default function Home({
               <p
                 className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
               >
-                Cloud coverage: {cloud}%
+                Cloud Coverage: {cloud}%
               </p>
               <p>Sunset: {sunset}</p>
               <p>Moon Rise: {moonrise}</p>
