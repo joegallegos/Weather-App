@@ -100,7 +100,7 @@ export default function Home({
   );
 }
 
-Home.getInitialProps = async geo => {
+Home.getInitialProps = async () => {
   const baseUrl = 'http://api.weatherapi.com/v1';
   const key = process.env.API_KEY;
   const day = new Date();
