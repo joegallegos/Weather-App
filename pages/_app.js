@@ -1,12 +1,11 @@
-import '../styles/globals.css';
 import '../styles/tailwind.css';
-import { ThemeProvider, theme } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/core';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
+    <ChakraProvider>
       <Component {...pageProps} />
-    </ThemeProvider>
+    </ChakraProvider>
   );
 }
 
