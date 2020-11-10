@@ -106,12 +106,12 @@ Home.getInitialProps = async () => {
   const day = new Date();
   const today = day.getDate();
 
-  const res = await fetch(baseUrl + '/current.json?key=' + key + '&q=75098');
+  const res = await fetch(baseUrl + '/current.json?key=' + key + '&q=80004');
   const json = await res.json();
   const location = await json.location;
   const current = await json.current;
 
-  const astro = await fetch(baseUrl + '/astronomy.json?key=' + key + '&q=75098&dt=' + today);
+  const astro = await fetch(baseUrl + '/astronomy.json?key=' + key + '&q=80004&dt=' + today);
   const jsonAstro = await astro.json();
 
   return {
