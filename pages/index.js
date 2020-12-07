@@ -24,7 +24,7 @@ export default function Home({}) {
   const [phase, setPhase] = useState('');
   const [illumination, setIllumination] = useState('');
 
-  const { API_KEY } = process.env;
+  const { NEXT_PUBLIC_API_KEY } = process.env;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -34,12 +34,14 @@ export default function Home({}) {
     const day = new Date();
     const today = day.getDate();
 
-    const res = await fetch(`${baseUrl}/current.json?key=${API_KEY}&q=${zip}`);
+    const res = await fetch(`${baseUrl}/current.json?key=${NEXT_PUBLIC_API_KEY}&q=${zip}`);
     const json = await res.json();
     const location = await json.location;
     const current = await json.current;
 
-    const astro = await fetch(`${baseUrl}/astronomy.json?key=${API_KEY}&q=${zip}&dt=${today}`);
+    const astro = await fetch(
+      `${baseUrl}/astronomy.json?key=${NEXT_PUBLIC_API_KEY}&q=${zip}&dt=${today}`
+    );
     const jsonAstro = await astro.json();
 
     setName(location.name),
