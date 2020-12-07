@@ -30,7 +30,7 @@ export default function Home({}) {
     e.preventDefault();
     setZip('');
 
-    const baseUrl = 'https://api.weatherapi.com/v1';
+    const baseUrl = 'http://api.weatherapi.com/v1';
     const day = new Date();
     const today = day.getDate();
 
