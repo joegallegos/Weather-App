@@ -120,7 +120,7 @@ export default function Home({}) {
                 Temp: {temp ? `${Math.floor(temp)}\u00B0F` : ''}
               </p>
               <p className={clsx(wind >= 7 ? 'text-red-500' : 'text-green-500')}>
-                Wind: {wind ? `${Math.floor(wind)} MPH` : ''}
+                Wind: {Math.floor(wind)} MPH
               </p>
               <p className={clsx(humidity >= 85 ? 'text-red-500' : 'text-green-500')}>
                 Humidity: {humidity ? `${humidity}%` : ''}
@@ -128,7 +128,7 @@ export default function Home({}) {
               <p
                 className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
               >
-                Cloud Coverage: {cloud ? `${cloud}%` : ''}
+                Cloud Coverage: {cloud}%
               </p>
               <p>Sunset: {sunset ? sunset : ''}</p>
               <p>Moon Rise: {moonrise ? moonrise : ''}</p>
