@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 export default function Home({}) {
+  const [loading, setLoading] = useState(false);
   const d = new Date();
   const currentYear = d.getFullYear();
   const currentTime = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -28,6 +29,7 @@ export default function Home({}) {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     setZip('');
 
     const baseUrl = 'https://api.weatherapi.com/v1';
@@ -44,20 +46,21 @@ export default function Home({}) {
     );
     const jsonAstro = await astro.json();
 
-    setName(location.name),
-      setRegion(location.region),
-      setUpdated(current.last_updated),
-      setTemp(current.temp_f),
-      setConditionText(current.condition.text),
-      setConditionIcon(current.condition.icon),
-      setWind(current.wind_mph),
-      setHumidity(current.humidity),
-      setCloud(current.cloud),
-      setSunset(jsonAstro.astronomy.astro.sunset),
-      setMoonrise(jsonAstro.astronomy.astro.moonrise),
-      setMoonset(jsonAstro.astronomy.astro.moonset),
-      setPhase(jsonAstro.astronomy.astro.moon_phase),
-      setIllumination(jsonAstro.astronomy.astro.moon_illumination);
+    setName(location.name);
+    setRegion(location.region);
+    setUpdated(current.last_updated);
+    setTemp(current.temp_f);
+    setConditionText(current.condition.text);
+    setConditionIcon(current.condition.icon);
+    setWind(current.wind_mph);
+    setHumidity(current.humidity);
+    setCloud(current.cloud);
+    setSunset(jsonAstro.astronomy.astro.sunset);
+    setMoonrise(jsonAstro.astronomy.astro.moonrise);
+    setMoonset(jsonAstro.astronomy.astro.moonset);
+    setPhase(jsonAstro.astronomy.astro.moon_phase);
+    setIllumination(jsonAstro.astronomy.astro.moon_illumination);
+    setLoading(false);
   };
 
   return (
@@ -84,7 +87,13 @@ export default function Home({}) {
                   value={zip}
                   onChange={e => setZip(e.target.value)}
                 />
-                <Button colorScheme="blue" type="submit" variant="solid" onClick={handleSubmit}>
+                <Button
+                  colorScheme="blue"
+                  isLoading={loading}
+                  type="submit"
+                  variant="solid"
+                  onClick={handleSubmit}
+                >
                   Submit
                 </Button>
               </div>
@@ -120,7 +129,7 @@ export default function Home({}) {
                 Temp: {temp ? `${Math.floor(temp)}\u00B0F` : ''}
               </p>
               <p className={clsx(wind >= 7 ? 'text-red-500' : 'text-green-500')}>
-                Wind: {Math.floor(wind)} MPH
+                Wind: {wind ? `${Math.floor(wind)} MPH` : ''}
               </p>
               <p className={clsx(humidity >= 85 ? 'text-red-500' : 'text-green-500')}>
                 Humidity: {humidity ? `${humidity}%` : ''}
@@ -128,7 +137,7 @@ export default function Home({}) {
               <p
                 className={clsx('font-extrabold', cloud <= 30 ? 'text-green-600' : 'text-red-600')}
               >
-                Cloud Coverage: {cloud}%
+                Cloud Coverage: {cloud ? `${cloud}%` : ''}
               </p>
               <p>Sunset: {sunset ? sunset : ''}</p>
               <p>Moon Rise: {moonrise ? moonrise : ''}</p>
